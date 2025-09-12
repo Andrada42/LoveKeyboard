@@ -12,7 +12,7 @@
     >
     <!--De continuat title-bar-->
     <Grid>
-        <TextBlock Text="Hello World!"
+        <TextBlock Text="Buna lume"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     FontSize="24"
