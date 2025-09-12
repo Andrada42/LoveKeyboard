@@ -33,12 +33,13 @@
                     <Button Grid.Column="3" Content="X" Width="30" Background="Red" Foreground="White" Click="CloseButton_Click"/>
             </Grid>
             <Grid>
-                <TextBlock Text="Buna lume!"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        FontSize="20"
-                        Foreground="Red"
-                />
+                <TextBox 
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        TextWrapping="Wrap"
+                        AcceptsReturn="True"
+                        VerticalScrollBarVisibility="Auto"
+                        FontSize="18"/>
             </Grid>
         </DockPanel>
     </Border>
