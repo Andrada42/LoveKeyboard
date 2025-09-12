@@ -7,9 +7,13 @@
         mc:Ignorable="d"
         Title="LoveKeyboard" Height="450" Width="800"
         Background="Black"
+        
         WindowStyle="None"
         AllowsTransparency="True"
+
+        Loaded="Window_Loaded"
     >
+
     <Border
         Background="#F2D0BB"
         BorderBrush="#946C54"
@@ -33,13 +37,17 @@
                     <Button Grid.Column="3" Content="X" Width="30" Background="Red" Foreground="White" Click="CloseButton_Click"/>
             </Grid>
             <Grid>
-                <TextBox 
+                <TextBox x:Name="MainTextBox"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
+                        Margin="15"
+                        FontSize="20"
                         TextWrapping="Wrap"
                         AcceptsReturn="True"
                         VerticalScrollBarVisibility="Auto"
-                        FontSize="18"/>
+                        Background="#F2D0BB"
+                        BorderThickness="0"
+                        />
             </Grid>
         </DockPanel>
     </Border>

@@ -33,6 +33,12 @@ public partial class MainWindow : Window
     {
         Close();
     }
+
+    private void Window_Loaded(object sender, RoutedEventArgs e)
+    {
+        MainTextBox.Focus();
+    }
+
     public MainWindow()
     {
         InitializeComponent();
