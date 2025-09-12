@@ -15,7 +15,7 @@
         <TextBlock Text="Buna lume!"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    FontSize="28"
+                    FontSize="20"
                     Foreground="Red"
                     />
     </Grid>
