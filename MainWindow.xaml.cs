@@ -20,4 +20,22 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
     }
+    private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+private void MaximizeButton_Click(object sender, RoutedEventArgs e)
+{
+    if (WindowState == WindowState.Normal)
+        WindowState = WindowState.Maximized;
+    else
+        WindowState = WindowState.Normal;
+}
+
+private void CloseButton_Click(object sender, RoutedEventArgs e)
+{
+    Close();
+}
+
 }

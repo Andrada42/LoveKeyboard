@@ -5,18 +5,41 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LoveKeyboard"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="LoveKeyboard" Height="450" Width="800"
+        Background="Black"
         WindowStyle="None"
         AllowsTransparency="True"
-        Background="Black"
     >
-    <!--De continuat title-bar-->
-    <Grid>
-        <TextBlock Text="Buna lume!"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontSize="20"
-                    Foreground="Red"
-                    />
-    </Grid>
+    <Border
+        Background="#F2D0BB"
+        BorderBrush="#946C54"
+        BorderThickness="2"
+    >
+        <DockPanel>
+            <Grid DockPanel.Dock="Top" Height="30" Background="#F2D0BB">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="LoveKeyboard" Foreground="#704123" FontSize="16" FontWeight="bold" VerticalAlignment="Center"
+                        Margin="10,0"/>
+                    <!-- Minimize Button -->
+                    <Button Grid.Column="1" Content="_" Width="30" Click="MinimizeButton_Click"/>
+                    <!-- Maximize/Restore Button -->
+                    <Button Grid.Column="2" Content="□" Width="30" Click="MaximizeButton_Click"/>
+                    <!-- Close Button -->
+                    <Button Grid.Column="3" Content="X" Width="30" Background="Red" Foreground="White" Click="CloseButton_Click"/>
+            </Grid>
+            <Grid>
+                <TextBlock Text="Buna lume!"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        Foreground="Red"
+                />
+            </Grid>
+        </DockPanel>
+    </Border>
 </Window>
