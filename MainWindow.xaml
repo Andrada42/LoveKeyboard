@@ -16,7 +16,7 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     FontSize="28"
-                    Foreground="Cyan"
+                    Foreground="Red"
                     />
     </Grid>
 </Window>
