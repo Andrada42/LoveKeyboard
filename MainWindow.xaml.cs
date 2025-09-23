@@ -4,6 +4,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
+using System.Runtime.InteropServices;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -15,12 +17,65 @@ namespace LoveKeyboard;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
+
 public partial class MainWindow : Window
 {
+    private const int WM_GETMINMAXINFO = 0x0024;
+
+    [StructLayout(LayoutKind.Sequential)]
+    struct POINT { public int x, y; }
+    [StructLayout(LayoutKind.Sequential)]
+    struct MINMAXINFO
+    {
+        public POINT ptReserved;
+        public POINT ptMaxSize;
+        public POINT ptMaxPosition;
+        public POINT ptMinTrackSize;
+        public POINT ptMaxTrackSize;
+    }
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+    struct MONITORINFO
+    {
+        public int cbSize;
+        public RECT rcMonitor;
+        public RECT rcWork;
+        public uint dwFlags;
+    }
+    [StructLayout(LayoutKind.Sequential)]
+    struct RECT { public int left, top, right, bottom; }
+    [DllImport("user32.dll")]
+    static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
+    [DllImport("user32.dll", CharSet = CharSet.Auto)]
+    static extern bool GetMonitorInfo(IntPtr hMonitor, ref MONITORINFO lpmi);
+    private const uint MONITOR_DEFAULTTONEAREST = 2;
+
+    private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+    {
+        if (msg == WM_GETMINMAXINFO)
+        {
+            var mmi = Marshal.PtrToStructure<MINMAXINFO>(lParam);
+
+            var monitor = MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
+            var info = new MONITORINFO { cbSize = Marshal.SizeOf(typeof(MONITORINFO)) };
+            GetMonitorInfo(monitor, ref info);
+
+            // Set maximized size/position to the monitor's working area
+            mmi.ptMaxPosition.x = info.rcWork.left;
+            mmi.ptMaxPosition.y = info.rcWork.top;
+            mmi.ptMaxSize.x = info.rcWork.right - info.rcWork.left;
+            mmi.ptMaxSize.y = info.rcWork.bottom - info.rcWork.top;
+
+            Marshal.StructureToPtr(mmi, lParam, true);
+            handled = true;
+        }
+
+        return IntPtr.Zero;
+    }
+
     public MainWindow()
     {
         InitializeComponent();
-
+        Loaded += Window_Loaded;
 
         var chrome = new WindowChrome //Resizable window function + drag function
         {
@@ -31,14 +86,20 @@ public partial class MainWindow : Window
         };
         WindowChrome.SetWindowChrome(this, chrome);
     }
+    private void Window_Loaded(object sender, RoutedEventArgs e)
+    {
+         MainTextBox.Focus();
+        var hwnd = new WindowInteropHelper(this).Handle;
+        HwndSource.FromHwnd(hwnd)?.AddHook(WndProc);
+    }
 
     private void ToggleMaximizeRestore() //Toggles between maximized and normal
     {
         WindowState = WindowState == WindowState.Normal
-        ? WindowState.Maximized 
+        ? WindowState.Maximized
         : WindowState.Normal;
     }
-    
+
     private void MinimizeButton_Click(object sender, RoutedEventArgs e)     //Minimize button
     {
         WindowState = WindowState.Minimized;
@@ -54,11 +115,6 @@ public partial class MainWindow : Window
     private void CloseButton_Click(object sender, RoutedEventArgs e)     //Close window button
     {
         Close();
-    }
-
-    private void Window_Loaded(object sender, RoutedEventArgs e)
-    {
-        MainTextBox.Focus();
     }
 
     private void MainTextBox_TextChanged(object sender, RoutedEventArgs e)
