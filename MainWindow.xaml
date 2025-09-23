@@ -12,7 +12,53 @@
         AllowsTransparency="True"
 
         Loaded="Window_Loaded"
+        ResizeMode="CanResize"
     >
+
+    <Window.Resources>
+        <Style x:Key="TitleBarButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#F2D0BB"/>
+            <Setter Property="Foreground" Value="#704123"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter 
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E5BFA6"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#D0A78F"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="TitleBarCloseButtonStyle" 
+               BasedOn="{StaticResource TitleBarButtonStyle}" 
+               TargetType="Button">
+            <Setter Property="Foreground" Value="#704123"/>
+            <Setter Property="Background" Value="#F2D0BB"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Red"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#990000"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
 
     <Border
         Background="#F2D0BB"
@@ -30,11 +76,11 @@
                     <TextBlock Text="LoveKeyboard" Foreground="#704123" FontSize="16" FontWeight="bold" VerticalAlignment="Center"
                         Margin="10,0"/>
                     <!-- Minimize Button -->
-                    <Button Grid.Column="1" Content="_" Width="30" Click="MinimizeButton_Click"/>
+                    <Button Grid.Column="1" Content="_" Style="{StaticResource TitleBarButtonStyle}" Width="30" Click="MinimizeButton_Click" WindowChrome.IsHitTestVisibleInChrome="True"/>
                     <!-- Maximize/Restore Button -->
-                    <Button Grid.Column="2" Content="□" Width="30" Click="MaximizeButton_Click"/>
+                    <Button Grid.Column="2" Content="□" Style="{StaticResource TitleBarButtonStyle}" Width="30" Click="MaximizeButton_Click" WindowChrome.IsHitTestVisibleInChrome="True"/>
                     <!-- Close Button -->
-                    <Button Grid.Column="3" Content="X" Width="30" Background="Red" Foreground="White" Click="CloseButton_Click"/>
+                    <Button Grid.Column="3" Content="X" Style="{StaticResource TitleBarCloseButtonStyle}" Width="30" Click="CloseButton_Click" WindowChrome.IsHitTestVisibleInChrome="True"/>
             </Grid>
             <Grid>
                 <TextBox x:Name="MainTextBox"
