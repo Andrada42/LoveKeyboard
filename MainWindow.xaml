@@ -68,19 +68,75 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}">
-                            <ContentPresenter 
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"/>
-                        </Border>
+                        <!-- Setam un grid al imaginii + un dreptunghi cu efectul dorit la hover/click-->
+                        <Grid>
+                            <Image Source="pack://application:,,,/Images/clipboard.png"/>
+                            <Rectangle x:Name="HoverOverlay" Fill="Gray" Opacity="0">
+                                <Rectangle.OpacityMask>
+                                    <ImageBrush ImageSource="pack://application:,,,/Images/clipboard.png"/>
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </Grid>
+
+                        <!-- Animatii fade in/out -->
+                        <ControlTemplate.Triggers>
+                            <!-- hover și not pressed -->
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="IsPressed" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <MultiTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="HoverOverlay"
+                                                            Storyboard.TargetProperty="Opacity"
+                                                            To="0.5"
+                                                            Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </MultiTrigger.EnterActions>
+                                <MultiTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="HoverOverlay"
+                                                            Storyboard.TargetProperty="Opacity"
+                                                            To="0"
+                                                            Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </MultiTrigger.ExitActions>
+                            </MultiTrigger>
+
+                            <!-- pressed -->
+                            <Trigger Property="IsPressed" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="HoverOverlay"
+                                                            Storyboard.TargetProperty="Opacity"
+                                                            To="0.2"
+                                                            Duration="0:0:0.1"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <!-- Dacă e cazul de hover, opacitatea revine la 0.5, altfel la 0 -->
+                                    <BeginStoryboard>
+                                        <Storyboard FillBehavior="Stop">
+                                            <DoubleAnimation Storyboard.TargetName="HoverOverlay"
+                                                            Storyboard.TargetProperty="Opacity"
+                                                            To="0.5"
+                                                            Duration="0:0:0.1"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
+
                 </Setter.Value>
             </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#F2D0BB"/>
-                </Trigger>
-            </Style.Triggers>
         </Style>
     </Window.Resources>
 
@@ -124,8 +180,8 @@
                             Style="{StaticResource CopyButtonStyle}"
                             Width="50"
                             Height="50"
+                            Margin="0,0,0,5"
                             >
-                        <Image Source="pack://application:,,,/Images/clipboard.png"/>
                     </Button>
                     
 
