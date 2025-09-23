@@ -19,7 +19,10 @@ public partial class MainWindow : Window
 {
     public MainWindow()
     {
-        var chrome = new WindowChrome //Reziable window function + drag function
+        InitializeComponent();
+
+        
+        var chrome = new WindowChrome //Resizable window function + drag function
         {
             ResizeBorderThickness = new Thickness(5), // Thickness of resizable border
             CaptionHeight = 30,                       // Height of draggable area (title bar)
@@ -96,10 +99,4 @@ public partial class MainWindow : Window
         tb.Text = output;
         tb.SelectionStart = selectionStart;
     }
-
-    public MainWindow()
-    {
-        InitializeComponent();
-    }
-
 }
