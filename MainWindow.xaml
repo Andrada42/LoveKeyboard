@@ -9,6 +9,7 @@
         Background="Black"
         WindowStyle="None"
         AllowsTransparency="True"
+        ResizeMode="CanResize"
     >
     <Border
         Background="#F2D0BB"
@@ -26,11 +27,11 @@
                     <TextBlock Text="LoveKeyboard" Foreground="#704123" FontSize="16" FontWeight="bold" VerticalAlignment="Center"
                         Margin="10,0"/>
                     <!-- Minimize Button -->
-                    <Button Grid.Column="1" Content="_" Width="30" Click="MinimizeButton_Click"/>
+                    <Button Grid.Column="1" Content="_" Width="30" Click="MinimizeButton_Click" WindowChrome.IsHitTestVisibleInChrome="True"/>
                     <!-- Maximize/Restore Button -->
-                    <Button Grid.Column="2" Content="□" Width="30" Click="MaximizeButton_Click"/>
+                    <Button Grid.Column="2" Content="□" Width="30" Click="MaximizeButton_Click" WindowChrome.IsHitTestVisibleInChrome="True"/>
                     <!-- Close Button -->
-                    <Button Grid.Column="3" Content="X" Width="30" Background="Red" Foreground="White" Click="CloseButton_Click"/>
+                    <Button Grid.Column="3" Content="X" Width="30" Background="Red" Foreground="White" Click="CloseButton_Click" WindowChrome.IsHitTestVisibleInChrome="True"/>
             </Grid>
             <Grid>
                 <TextBox 
