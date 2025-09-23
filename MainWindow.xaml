@@ -38,6 +38,7 @@
             </Grid>
             <Grid>
                 <TextBox x:Name="MainTextBox"
+                        TextChanged="MainTextBox_Update"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         Margin="15"
