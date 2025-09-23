@@ -58,6 +58,30 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <Style x:Key="CopyButtonStyle" TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="Background" Value="#F2D0BB"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter 
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#F2D0BB"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
     <Border
@@ -84,7 +108,7 @@
             </Grid>
             <Grid>
                 <TextBox x:Name="MainTextBox"
-                        TextChanged="MainTextBox_Update"
+                        TextChanged="MainTextBox_TextChanged"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         Margin="15"
@@ -95,6 +119,16 @@
                         Background="#F2D0BB"
                         BorderThickness="0"
                         />
+                    
+                    <Button Click="CopyButton_Click"
+                            Style="{StaticResource CopyButtonStyle}"
+                            Width="50"
+                            Height="50"
+                            >
+                        <Image Source="pack://application:,,,/Images/clipboard.png"/>
+                    </Button>
+                    
+
             </Grid>
         </DockPanel>
     </Border>

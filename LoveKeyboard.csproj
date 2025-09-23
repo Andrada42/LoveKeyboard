@@ -8,4 +8,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <!-- Resurse folosite -->
+  <ItemGroup>
+    <Resource Include="Images\*" />
+  </ItemGroup>
+
 </Project>

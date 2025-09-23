@@ -21,7 +21,7 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
 
-        
+
         var chrome = new WindowChrome //Resizable window function + drag function
         {
             ResizeBorderThickness = new Thickness(5), // Thickness of resizable border
@@ -61,7 +61,7 @@ public partial class MainWindow : Window
         MainTextBox.Focus();
     }
 
-    private void MainTextBox_Update(object sender, RoutedEventArgs e)
+    private void MainTextBox_TextChanged(object sender, RoutedEventArgs e)
     {
         if (sender is not TextBox tb)   // daca sender nu e TextBox => return
             return;                     // altfel incarca tb cu TextBox-ul din sender
@@ -99,4 +99,10 @@ public partial class MainWindow : Window
         tb.Text = output;
         tb.SelectionStart = selectionStart;
     }
+
+    private void CopyButton_Click(object sender, RoutedEventArgs e)
+    {
+        Clipboard.SetText(MainTextBox.Text);
+    }
+
 }
