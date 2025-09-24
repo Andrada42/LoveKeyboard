@@ -59,9 +59,9 @@
             </Style.Triggers>
         </Style>
 
+
+
         <Style x:Key="CopyButtonStyle" TargetType="Button">
-            <Setter Property="HorizontalAlignment" Value="Right"/>
-            <Setter Property="VerticalAlignment" Value="Bottom"/>
             <Setter Property="Background" Value="#F2D0BB"/>
             <Setter Property="BorderThickness" Value="0"/>
             
@@ -138,6 +138,53 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="EmojiButtonStyle" 
+               BasedOn="{StaticResource CopyButtonStyle}" 
+               TargetType="Button">
+            <Setter Property="Foreground" Value="#704123"/>
+            <Setter Property="Background" Value="#F2D0BB"/>
+        </Style>
+
+        <Style x:Key="EmojiStyle" 
+                TargetType="Button">
+            <Setter Property="FontFamily" Value="Segoe UI Emoji"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="#F2D0BB"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <!-- Hover -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#E0B5A0"/>
+                            </Trigger>
+                            <!-- Pressed -->
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#C68C75"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="LargeEmojiStyle"
+                BasedOn="{StaticResource EmojiStyle}"
+                TargetType="Button">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Width" Value="47"/>
+        </Style>
     </Window.Resources>
 
     <Border
@@ -164,27 +211,75 @@
             </Grid>
             <Grid>
                 <TextBox x:Name="MainTextBox"
-                        TextChanged="MainTextBox_TextChanged"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Margin="15"
-                        FontSize="20"
-                        TextWrapping="Wrap"
-                        AcceptsReturn="True"
-                        VerticalScrollBarVisibility="Auto"
-                        Background="#F2D0BB"
-                        BorderThickness="0"
-                        />
+                    TextChanged="MainTextBox_TextChanged"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Margin="15"
+                    FontSize="20"
+                    TextWrapping="Wrap"
+                    AcceptsReturn="True"
+                    VerticalScrollBarVisibility="Auto"
+                    Background="#F2D0BB"
+                    BorderThickness="0"
+                    />
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Margin="0,0,0,5">
                     
                     <Button Click="CopyButton_Click"
                             Style="{StaticResource CopyButtonStyle}"
                             Width="50"
                             Height="50"
-                            Margin="0,0,0,5"
                             >
                     </Button>
-                    
 
+                    <Button x:Name="EmojiButton"
+                            Click="EmojiButton_Click"
+                            Style="{StaticResource EmojiButtonStyle}"
+                            Width="50"
+                            Height="50">
+                    </Button>
+
+                    <Popup x:Name="EmojiPopup"
+                        PlacementTarget="{Binding ElementName=EmojiButton}"
+                        Placement="Right"
+                        StaysOpen="True"
+                        AllowsTransparency="True"
+                        PopupAnimation="Fade">
+                        <Border Background="#F2D0BB" Padding="5" CornerRadius="10" BorderBrush="#704123" BorderThickness="2">
+                            <WrapPanel Width="102">
+                                <!-- 
+                                width 30 + margin 2 * 2 = 34 latimea unui buton
+                                -->
+                                <Button Content="♥️" Style="{StaticResource EmojiStyle}" Click="Emoji_Click"/>
+                                <Button Content="💓" Style="{StaticResource EmojiStyle}" Click="Emoji_Click"/>
+                                <Button Content="❤️‍🔥" Style="{StaticResource EmojiStyle}" Click="Emoji_Click"/>
+
+                                <Button Content="🏮" Style="{StaticResource EmojiStyle}" Click="Emoji_Click"/>
+                                <Button Content="🌹" Style="{StaticResource EmojiStyle}" Click="Emoji_Click"/>
+                                <Button Content="😑" Style="{StaticResource EmojiStyle}" Click="Emoji_Click"/>
+
+                                <Button Content="😅" Style="{StaticResource EmojiStyle}" Click="Emoji_Click"/>
+                                <Button Content="😂" Style="{StaticResource EmojiStyle}" Click="Emoji_Click"/>
+                                <Button Content="🤣" Style="{StaticResource EmojiStyle}" Click="Emoji_Click"/>
+
+                                <Button Content="♥️🌹♥️" Style="{StaticResource LargeEmojiStyle}" Click="Emoji_Click"/>
+                                <Button Content="🌹♥️🌹" Style="{StaticResource LargeEmojiStyle}" Click="Emoji_Click"/>
+
+                                <Button Content="💓🌹💓" Style="{StaticResource LargeEmojiStyle}" Click="Emoji_Click"/>
+                                <Button Content="🌹💓🌹" Style="{StaticResource LargeEmojiStyle}" Click="Emoji_Click"/>
+
+                                <Button Content="❤️‍🔥🌹❤️‍🔥" Style="{StaticResource LargeEmojiStyle}" FontSize="8" Click="Emoji_Click"/>
+                                <Button Content="🌹❤️‍🔥🌹" Style="{StaticResource LargeEmojiStyle}" FontSize="8" Click="Emoji_Click"/>
+                                
+                                <Button Content="🏮🌹🏮" Style="{StaticResource LargeEmojiStyle}" Click="Emoji_Click"/>
+                                <Button Content="🌹🏮🌹" Style="{StaticResource LargeEmojiStyle}" Click="Emoji_Click"/>
+                            </WrapPanel>
+                        </Border>
+                    </Popup>
+
+                </StackPanel>
             </Grid>
         </DockPanel>
     </Border>

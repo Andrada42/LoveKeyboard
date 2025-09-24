@@ -23,8 +23,11 @@ AssemblyInfo.cs
 
 Cum dai Build?
     - dotnet build, dotnet run
-    -dotnet publish -c Release -r win10-x6 --self-contained true /p:PublishSingleFile=true     => executabil
+    - dotnet publish -c Release -r win10-x64 --self-contained true /p:PublishSingleFile=true     => executabil
         - -c Release / Debug                            => stilul executabilului (de Release / Debug)
         - -r win10-x64 / win-x86 / linux-x64 / osx-x64  => sistem de operare
         - --self-contained true                         => Ruleaza si pe PC-uri fara .NET instalat 
         - /p:PublishSingleFile=true                     => creaza un singur fisier executabil
+
+
+Pentru a avea versiunea colora a emojiilor, aplicatia trebuie facuta in WinUI 3 / UWP / MAUI. Nu avem ce-i face...

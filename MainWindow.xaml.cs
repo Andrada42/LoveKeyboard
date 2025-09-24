@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -75,6 +76,11 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        // Pt. a inchide popup-ul cand defocalizam, mutam sau redimensionam fereastra
+        this.Deactivated += MainWindow_SomethingChanged;
+        this.LocationChanged += MainWindow_SomethingChanged;
+        this.SizeChanged += MainWindow_SomethingChanged;
+
         Loaded += Window_Loaded;
 
         var chrome = new WindowChrome //Resizable window function + drag function
@@ -88,7 +94,7 @@ public partial class MainWindow : Window
     }
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
-         MainTextBox.Focus();
+        MainTextBox.Focus();
         var hwnd = new WindowInteropHelper(this).Handle;
         HwndSource.FromHwnd(hwnd)?.AddHook(WndProc);
     }
@@ -159,6 +165,57 @@ public partial class MainWindow : Window
     private void CopyButton_Click(object sender, RoutedEventArgs e)
     {
         Clipboard.SetText(MainTextBox.Text);
+        MainTextBox.Focus();
     }
 
+    private void EmojiButton_Click(object sender, RoutedEventArgs e)
+    {
+        EmojiPopup.IsOpen = !EmojiPopup.IsOpen;
+        MainTextBox.Focus();
+    }
+    private void Emoji_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not Button b)
+            return;
+        
+        string emoji = b.Content?.ToString() ?? "";
+        // ?. => daca b.Content == null, nu apeleaza ToString() si returneaza null
+        // ?? => daca b.Content?.ToString() e null, emoji = ""
+        if (string.IsNullOrEmpty(emoji))
+            return;
+        
+        // Indecsii selectiei, daca e cazul
+        // (daca nu sunt caractere selectate, length = 0 iar start = pozitia caret-ului)
+        int start = MainTextBox.SelectionStart;
+        int length = MainTextBox.SelectionLength;
+
+        MainTextBox.Text = MainTextBox.Text.Remove(start, length); // șterge selecția
+        MainTextBox.Text = MainTextBox.Text.Insert(start, emoji);  // inserează emoji-ul
+
+        MainTextBox.CaretIndex = start + emoji.Length;
+        MainTextBox.Focus();
+        
+    }
+
+    private void ClosePopup()
+    {
+        // Inchide popup-ul cand aplicatia nu mai e activa
+        if (EmojiPopup.IsOpen)
+        {
+            // Retinem animatia de deschidere/inchidere a popup-ului
+            var oldAnimation = EmojiPopup.PopupAnimation; 
+            // O dezactivam/stergem temporar
+            EmojiPopup.PopupAnimation = PopupAnimation.None;
+            // Inchidem popup-ul
+            EmojiPopup.IsOpen = false;
+            // Restauram animatia pentru urmatoarea deschidere
+            EmojiPopup.PopupAnimation = oldAnimation;
+        }
+    }
+
+    // SomethingChanged = Fereastra s-a dezactivat / a fost mutata / a fost redimensionata
+    private void MainWindow_SomethingChanged(object? sender, EventArgs e) // EventHandler
+    {
+        ClosePopup();
+    }
 }
