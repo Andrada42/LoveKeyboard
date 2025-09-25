@@ -1,3 +1,39 @@
+# Lovekeyboard
+---
+Convertor din text normal in font cursiv ([Caracterele Unicode U+1D4D0 - U+1D4E9](https://www.compart.com/en/unicode/block/U+1D4D0))
+
+### Cum dai Build?
+```cmd
+dotnet build
+```
+
+### Cum dai Run?
+```cmd
+dotnet run
+```
+
+### Cum obtii un executabil?
+```cmd
+dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true
+```
+=> executabil in .\bin\Release\net8.0-windows\win-x64\publish
+
+- -c Release / Debug                            => stilul executabilului (de Release / Debug)
+- -r win-x64 / win-x86 / linux-x64 / osx-x64    => sistem de operare
+- --self-contained true                         => Ruleaza si pe PC-uri fara .NET instalat 
+- /p:PublishSingleFile=true                     => creaza un singur fisier executabil
+
+---
+### Possible Improvements:
+- Dark Theme (Buton jos de tip on/off)
+- Sunet la toate butoanele + cand tastezi
+- Animatia ferestrei cand o pui in bara/deschizi din taskbar
+- Daca dai paste la link-uri, sa nu le converteasca in font (Poate un buton jos de tip on/off la convertirea textului)
+
+- **Pentru a avea versiunea colora a emojiilor, aplicatia trebuie convertita in WinUI 3 / UWP / MAUI.**
+
+---
+### Good to know:
 LoveKeyboard.csproj
     - proprietatile aplicatiei (ex: output-ul aplicatiei (.exe), versiunea framework-ului folosit, daca foloseste WPF sau nu)
 
@@ -19,15 +55,3 @@ obj - DO NOT TOUCH
 AssemblyInfo.cs
     - metadata aplicatiei (ce apare in Properties)
     - pot fi precizate si in .csproj
-
-
-Cum dai Build?
-    - dotnet build, dotnet run
-    - dotnet publish -c Release -r win10-x64 --self-contained true /p:PublishSingleFile=true     => executabil
-        - -c Release / Debug                            => stilul executabilului (de Release / Debug)
-        - -r win10-x64 / win-x86 / linux-x64 / osx-x64  => sistem de operare
-        - --self-contained true                         => Ruleaza si pe PC-uri fara .NET instalat 
-        - /p:PublishSingleFile=true                     => creaza un singur fisier executabil
-
-
-Pentru a avea versiunea colora a emojiilor, aplicatia trebuie facuta in WinUI 3 / UWP / MAUI. Nu avem ce-i face...
