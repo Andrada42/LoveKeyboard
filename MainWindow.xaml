@@ -5,15 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LoveKeyboard"
         mc:Ignorable="d"
-        Title="LoveKeyboard" Height="150" Width="400"
+        Title="LoveKeyboard" Height="240" Width="400"
         Background="Black"
         
         WindowStyle="None"
         AllowsTransparency="True"
 
         Loaded="Window_Loaded"
-        ResizeMode="CanResize"
-    >
+        ResizeMode="CanResize">
 
     <Window.Resources>
         <Style x:Key="TitleBarButtonStyle" TargetType="Button">
@@ -59,21 +58,29 @@
             </Style.Triggers>
         </Style>
 
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <!-- Proprietati definite de noi -->
+            <!-- Ele exista de fapt dar le folosim cu alt scop -->
+            <!-- Posibile probleme? -->
+            <Setter Property="Tag" Value="pack://application:,,,/Images/files.png"/> <!-- imagine default -->
+            <Setter Property="Content" Value="#704123"/>
 
-
-        <Style x:Key="CopyButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#F2D0BB"/>
             <Setter Property="BorderThickness" Value="0"/>
-            
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Height" Value="40"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <!-- Setam un grid al imaginii + un dreptunghi cu efectul dorit la hover/click-->
                         <Grid>
-                            <Image Source="pack://application:,,,/Images/clipboard.png"/>
-                            <Rectangle x:Name="HoverOverlay" Fill="Gray" Opacity="0">
+                            <Image Source="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Stretch="Uniform" 
+                                    HorizontalAlignment="Stretch" 
+                                    VerticalAlignment="Stretch"/>
+                            <Rectangle x:Name="HoverOverlay" Fill="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}" Opacity="0">
                                 <Rectangle.OpacityMask>
-                                    <ImageBrush ImageSource="pack://application:,,,/Images/clipboard.png"/>
+                                    <ImageBrush ImageSource="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"/>
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </Grid>
@@ -139,13 +146,6 @@
             </Setter>
         </Style>
 
-        <Style x:Key="EmojiButtonStyle" 
-               BasedOn="{StaticResource CopyButtonStyle}" 
-               TargetType="Button">
-            <Setter Property="Foreground" Value="#704123"/>
-            <Setter Property="Background" Value="#F2D0BB"/>
-        </Style>
-
         <Style x:Key="EmojiStyle" 
                 TargetType="Button">
             <Setter Property="FontFamily" Value="Segoe UI Emoji"/>
@@ -187,11 +187,9 @@
         </Style>
     </Window.Resources>
 
-    <Border
-        Background="#F2D0BB"
-        BorderBrush="#946C54"
-        BorderThickness="2"
-    >
+    <Border Background="#F2D0BB"
+            BorderBrush="#946C54"
+            BorderThickness="2">
         <DockPanel>
             <Grid DockPanel.Dock="Top" Height="30" Background="#F2D0BB">
                     <Grid.ColumnDefinitions>
@@ -200,8 +198,7 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="LoveKeyboard" Foreground="#704123" FontSize="16" FontWeight="bold" VerticalAlignment="Center"
-                        Margin="10,0"/>
+                    <TextBlock Text="LoveKeyboard" Foreground="#704123" FontSize="16" FontWeight="bold" VerticalAlignment="Center" Margin="10,0"/>
                     <!-- Minimize Button -->
                     <Button Grid.Column="1" Content="_" Style="{StaticResource TitleBarButtonStyle}" Width="30" Click="MinimizeButton_Click" WindowChrome.IsHitTestVisibleInChrome="True"/>
                     <!-- Maximize/Restore Button -->
@@ -209,37 +206,37 @@
                     <!-- Close Button -->
                     <Button Grid.Column="3" Content="X" Style="{StaticResource TitleBarCloseButtonStyle}" Width="30" Click="CloseButton_Click" WindowChrome.IsHitTestVisibleInChrome="True"/>
             </Grid>
+
             <Grid>
                 <TextBox x:Name="MainTextBox"
                     TextChanged="MainTextBox_TextChanged"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
-                    Margin="15"
-                    FontSize="20"
+                    Margin="15,5,15,15"
+                    Padding="0,0,0,25"
+                    FontSize="24"
                     TextWrapping="Wrap"
                     AcceptsReturn="True"
                     VerticalScrollBarVisibility="Auto"
                     Background="#F2D0BB"
-                    BorderThickness="0"
-                    />
+                    BorderThickness="0"/>
+                
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Bottom"
-                            Margin="0,0,0,5">
+                            Margin="0,0,5,5">
                     
                     <Button Click="CopyButton_Click"
-                            Style="{StaticResource CopyButtonStyle}"
-                            Width="50"
-                            Height="50"
-                            >
-                    </Button>
+                            Style="{StaticResource ButtonStyle}"
+                            Tag="pack://application:,,,/Images/files.png"
+                            Content="#704123"
+                            Margin="5,0,5,0"/>
 
                     <Button x:Name="EmojiButton"
                             Click="EmojiButton_Click"
-                            Style="{StaticResource EmojiButtonStyle}"
-                            Width="50"
-                            Height="50">
-                    </Button>
+                            Style="{StaticResource ButtonStyle}"
+                            Tag="pack://application:,,,/Images/love.png"
+                            Content="#851d0b"/>
 
                     <Popup x:Name="EmojiPopup"
                         PlacementTarget="{Binding ElementName=EmojiButton}"
@@ -278,7 +275,6 @@
                             </WrapPanel>
                         </Border>
                     </Popup>
-
                 </StackPanel>
             </Grid>
         </DockPanel>
