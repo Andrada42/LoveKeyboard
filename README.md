@@ -34,24 +34,32 @@ dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=
 
 ---
 ### Good to know:
-LoveKeyboard.csproj
-    - proprietatile aplicatiei (ex: output-ul aplicatiei (.exe), versiunea framework-ului folosit, daca foloseste WPF sau nu)
+#### LoveKeyboard.csproj
+- proprietatile aplicatiei (ex: output-ul aplicatiei (.exe), versiunea framework-ului folosit, daca foloseste WPF sau nu)
 
-App.xaml
-    - stiluri teme si setari globale ale aplicatiei
-    - specifica fereastra ce se va deschide la launch (MainWindow)
-App.xaml.cs
-    - logica in C# la deschiderea/inchiderea aplicatiei sau la modificari globale
+#### App.xaml
+- stiluri teme si setari globale ale aplicatiei
+- specifica fereastra ce se va deschide la launch (MainWindow)
+#### App.xaml.cs
+- logica in C# la deschiderea/inchiderea aplicatiei sau la modificari globale
 
-MainWindow.xaml
-    - defineste interfata ferestrei
-MainWindow.xaml.cs
-    - logica in C# a elementelor ferestrei
+#### MainWindow.xaml
+- defineste interfata ferestrei
+#### MainWindow.xaml.cs
+- logica in C# a elementelor ferestrei
 
-obj - DO NOT TOUCH
-    - generat automat
-    - folder cu fisiere compilate si artefacte intermediare ale buildului
+#### obj - DO NOT TOUCH
+- generat automat
+- folder cu fisiere compilate si artefacte intermediare ale buildului
 
-AssemblyInfo.cs
-    - metadata aplicatiei (ce apare in Properties)
-    - pot fi precizate si in .csproj
+#### AssemblyInfo.cs
+- metadata aplicatiei (ce apare in Properties)
+- pot fi precizate si in .csproj
+
+---
+### Credits
+Aplicatia a fost facuta de Andrada si Ciprian (see contribuitors).
+---
+copy button icon designed by Smashicons from Flaticon
+emoji button icon designed by Freepik from Flaticon
+app icon designed by Vitaly Gorbachev from Flaticon
