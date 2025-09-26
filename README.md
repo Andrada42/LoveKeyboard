@@ -58,7 +58,8 @@ dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=
 
 ---
 ### Credits
-Aplicatia a fost facuta de Andrada si Ciprian (see contribuitors).
+**Aplicatia a fost facuta de Andrada si Ciprian (see contribuitors).**
+
 ---
 copy button icon designed by Smashicons from Flaticon
 emoji button icon designed by Freepik from Flaticon
