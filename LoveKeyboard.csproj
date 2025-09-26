@@ -6,10 +6,14 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <!-- Icon aplicatie -->
+    <ApplicationIcon>Images\appicon.ico</ApplicationIcon>
+    <Win32Icon>Images\appicon.ico</Win32Icon>
   </PropertyGroup>
 
   <!-- Resurse folosite -->
   <ItemGroup>
     <Resource Include="Images\*" />
   </ItemGroup>
+  
 </Project>
